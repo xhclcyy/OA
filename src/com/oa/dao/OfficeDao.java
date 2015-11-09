@@ -39,9 +39,7 @@ public interface OfficeDao {
 	 * @param conditions
 	 *            更新条件键值对
 	 */
-	public void update(String hql, Map<String, Object> values,
-			Map<String, Object> conditions);
-
+	public boolean update(String hql, Map<String, Object> map) throws Exception;
 	/**
 	 * 根据主键删除对象
 	 * 

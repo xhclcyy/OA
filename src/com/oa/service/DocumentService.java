@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.oa.model.Document;
+import com.oa.model.Trash;
 
 public interface DocumentService {
 	/**
@@ -21,9 +22,10 @@ public interface DocumentService {
 	/**
 	 * 把指定的文档放到回收站（把文档状态设置为0，同时在trash表中添加一行信息表示放到回收站,不用把文档下的附件状态设置为0）
 	 * @param documentId	文档Id
+	 * @param trash    垃圾回收对象trash
 	 * @throws Exception
 	 */
-	public void deleteDocument(String documentId) throws Exception;
+	public void deleteDocument(String documentId,Trash trash) throws Exception;
 	/**
 	 * 真正删除文档
 	 * @param documentId 文档Id
