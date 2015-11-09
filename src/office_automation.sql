@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50619
 File Encoding         : 65001
 
-Date: 2015-11-09 10:46:37
+Date: 2015-11-09 19:56:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -153,6 +153,24 @@ CREATE TABLE `role` (
 
 -- ----------------------------
 -- Records of role
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for trash
+-- ----------------------------
+DROP TABLE IF EXISTS `trash`;
+CREATE TABLE `trash` (
+  `trash_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trash_docOrAcc_id` int(11) NOT NULL,
+  `trash_docOrAcc` bit(1) NOT NULL,
+  `trash_docOrAcc_name` varchar(30) NOT NULL,
+  `trash_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `trash_department_no` char(15) NOT NULL,
+  PRIMARY KEY (`trash_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trash
 -- ----------------------------
 
 -- ----------------------------
