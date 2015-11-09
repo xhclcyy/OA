@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="accessory" catalog="office_automation">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="department" catalog="office_automation">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="document" catalog="office_automation">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="log" catalog="office_automation">
+		<primary-key>
+			<generator class="increment"></generator>
+		</primary-key>
+	</table>
+	<table name="login" catalog="office_automation"></table>
+</hibernate-reverse-engineering>
