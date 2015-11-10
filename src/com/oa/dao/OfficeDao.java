@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface OfficeDao {
-		/**
+	/**
 	 * 保存对象
 	 * 
 	 * @param obj
@@ -35,11 +35,10 @@ public interface OfficeDao {
 	 * @param hql
 	 *            hql语句
 	 * @param values
-	 *            更新的字段键值对
-	 * @param conditions
-	 *            更新条件键值对
+	 *            更新的字段和条件键值对
 	 */
-	public boolean update(String hql, Map<String, Object> map) throws Exception;
+	void update(String hql, Map<String, Object> values);
+
 	/**
 	 * 根据主键删除对象
 	 * 
@@ -122,4 +121,5 @@ public interface OfficeDao {
 	 * @return 数量
 	 */
 	public int count(String hql, Map<String, Object> map);
+
 }
