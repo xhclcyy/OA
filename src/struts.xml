@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<constant name="struts.i18n.reload" value="true" />
+	<!--设置开发模式 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 设置当struts.xml文件改动时，是否重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 设置浏览器是否缓存静态内容,默认值为true(生产环境下使用),开发阶段最好关闭 -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<!-- 以上内容开发阶段配置成true，正式运行后设置成false -->
+
+	<!-- 指定action的后缀，默认为action -->
+	<constant name="struts.action.extension" value="do" />
+	<!-- 让struts2支持动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<!-- 允许标签中使用表达式语法 -->
+	<constant name="struts.tag.altSyntax" value="true" />
+	<!-- 指定web应用的端口 -->
+	<constant name="struts.url.http.port" value="8080" />
+	<!-- 最大允许上传的文件大小50MB=50*1024*1024B -->
+	<constant name="struts.multipart.maxSize" value="52428800" />
+	<!-- 设置上传文件的临时文件夹,默认使用javax.servlet.context.tempdir -->
+	<constant name="struts.multipart.saveDir" value="D:/apache/landUpload/landTemp" />
+
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 无论怎样，struts都要考虑spring的自动装配，缺少会出现ioc失败 -->
+	<constant name="struts.objectFactory.spring.autoWire.alwaysRespect" value="true" /> 
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
+	
+	<package name="Document" extends="json-default" namespace="/">
+		<action name="a_*" class="com.oa.action.DocumentAction" method="{1}">
+			<result name="input" type="json"></result>
+		</action>
+	</package>
+</struts>    
