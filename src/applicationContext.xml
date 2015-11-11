@@ -16,9 +16,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/office_automation?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
-		<property name="username" value="root" />
-		<property name="password" value="1234" />
+			value="jdbc:mysql://202.116.161.92:3306/office_automation?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="developer" />
+		<property name="password" value="developer" />
 	</bean>
 	<!--定义Hibernate的SessionFactory -->
 	<bean id="sessionFactory"
