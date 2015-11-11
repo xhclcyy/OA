@@ -27,7 +27,6 @@ public class OfficeDaoImpl implements OfficeDao {
 
 	@Override
 	public void save(Object obj) {
-		System.out.print("jjjjjjjjjjjjjjjjjjjj");
 		getSession().save(obj);
 	}
 

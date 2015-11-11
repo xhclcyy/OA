@@ -24,18 +24,18 @@ public class DocumentServiceImpl implements DocumentService {
 
 	@Override
 	@Transactional
-	public void createDocument(Document document) throws Exception {
+	public void createDocument(Document document) {
 		this.officeDao.save(document);
 	}
 
 	@Override
-	public void editDocument(Document document) throws Exception {
+	public void editDocument(Document document) {
 		this.officeDao.update(document);
 
 	}
 
 	@Override
-	public void deleteDocument(String documentId, Trash trash) throws Exception {
+	public void deleteDocument(String documentId, Trash trash) {
 		String hql = "update Document set documentStatus=:flag where documentId=:id";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", documentId);
@@ -45,41 +45,39 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
-	public void realDeleteDocument(String documentId) throws Exception {
+	public void realDeleteDocument(String documentId) {
 		this.officeDao.deleteByPriKey(Document.class, documentId);
 
 	}
 
 	@Override
-	public void emptyTrash(String departmentNo) throws Exception {
+	public void emptyTrash(String departmentNo) {
 
 	}
 
 	@Override
-	public Map<String, Object> getDocuments(String departmentNo, String parentId)
-			throws Exception {
+	public Map<String, Object> getDocuments(String departmentNo, String parentId) {
 		return null;
 	}
 
 	@Override
-	public Map<String, Object> getDocument(String documentId) throws Exception {
+	public Map<String, Object> getDocument(String documentId) {
 		return null;
 	}
 
 	@Override
 	public List<Map<String, Object>> queryDocumentsByPage(String departmentNo,
-			Map<String, String> conditions) throws Exception {
+			Map<String, String> conditions) {
 		return null;
 	}
 
 	@Override
-	public void restoreDocument(String documentId) throws Exception {
+	public void restoreDocument(String documentId) {
 
 	}
 
 	@Override
-	public void getTrashDocAndAccByPage(String departmentNo, String condition)
-			throws Exception {
+	public void getTrashDocAndAccByPage(String departmentNo, String condition) {
 
 	}
 

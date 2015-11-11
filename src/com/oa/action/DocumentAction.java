@@ -9,11 +9,13 @@ import com.oa.service.DocumentService;
 @Controller
 public class DocumentAction {
 	private DocumentService document;
+
 	@Autowired
 	public void setDocument(DocumentService document) {
 		this.document = document;
 	}
-	public void test(){
+
+	public void test() {
 		System.out.println("caonima");
 		try {
 			document.createDocument(new Document());

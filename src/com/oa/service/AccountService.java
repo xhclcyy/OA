@@ -6,31 +6,41 @@ import com.oa.model.User;
 public interface AccountService {
 	/**
 	 * 账号登陆
-	 * @param account 用户账号（编号）
-	 * @param password 用户密码
+	 * 
+	 * @param account
+	 *            用户账号（编号）
+	 * @param password
+	 *            用户密码
 	 * @return 用户权限信息
-	 * @throws Exception
 	 */
-	public String login(String account,String password) throws Exception;
+	public String login(String account, String password);
+
 	/**
 	 * 注销登录（把登录状态设置为0）
-	 * @param account 用户账号（编号）
-	 * @throws Exception
+	 * 
+	 * @param account
+	 *            用户账号（编号）
 	 */
-	public void logout(String account) throws Exception;
+	public void logout(String account);
+
 	/**
 	 * 用户注册
-	 * @param user 用户对象
-	 * @param login 用户登录信息对象
-	 * @throws Exception
+	 * 
+	 * @param user
+	 *            用户对象
+	 * @param login
+	 *            用户登录信息对象
 	 */
-	public void register(User user,Login login) throws Exception;
+	public void register(User user, Login login);
+
 	/**
 	 * 修改密码
-	 * @param loginUserNo  账号
-	 * @param password 密码
-	 * @throws Exception
+	 * 
+	 * @param loginUserNo
+	 *            账号
+	 * @param password
+	 *            密码
 	 */
-	public void changePassword(String loginUserNo,String password) throws Exception;
-	
+	public void changePassword(String loginUserNo, String password);
+
 }
