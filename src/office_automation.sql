@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50619
 File Encoding         : 65001
 
-Date: 2015-11-09 19:56:02
+Date: 2015-11-13 21:30:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,6 +166,7 @@ CREATE TABLE `trash` (
   `trash_docOrAcc_name` varchar(30) NOT NULL,
   `trash_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `trash_department_no` char(15) NOT NULL,
+  `trash_user_no` char(15) NOT NULL,
   PRIMARY KEY (`trash_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
