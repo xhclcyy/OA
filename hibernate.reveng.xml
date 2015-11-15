@@ -22,5 +22,9 @@
 			<generator class="increment"></generator>
 		</primary-key>
 	</table>
-	<table name="login" catalog="office_automation"></table>
+<table name="login" catalog="office_automation">
+	<primary-key>
+		<generator class="increment"></generator>
+	</primary-key>
+</table>
 </hibernate-reverse-engineering>

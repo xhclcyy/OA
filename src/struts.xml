@@ -34,4 +34,10 @@
 			<result name="input" type="json"></result>
 		</action>
 	</package>
+	<package name="Login" extends="json-default" namespace="/">
+		<action name="login_*" class="com.oa.action.LoginAction" method="{1}">
+			<result name="input">/index.jsp</result>
+			<result name="success">/main.jsp</result>
+		</action>
+	</package>
 </struts>    

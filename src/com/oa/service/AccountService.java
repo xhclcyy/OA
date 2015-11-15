@@ -1,5 +1,7 @@
 package com.oa.service;
 
+import javax.transaction.Transactional;
+
 import com.oa.model.Login;
 import com.oa.model.User;
 
@@ -11,9 +13,9 @@ public interface AccountService {
 	 *            用户账号（编号）
 	 * @param password
 	 *            用户密码
-	 * @return 用户权限信息
+	 * @return 登录信息
 	 */
-	public String login(String account, String password);
+	public Login login(String account, String password);
 
 	/**
 	 * 注销登录（把登录状态设置为0）
@@ -42,5 +44,10 @@ public interface AccountService {
 	 *            密码
 	 */
 	public void changePassword(String loginUserNo, String password);
-
+	/**
+	 * 更新Login对象
+	 * @param login 登录对象
+	 */
+	@Transactional
+	public void update(Login login);
 }
