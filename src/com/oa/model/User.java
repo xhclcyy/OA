@@ -43,7 +43,6 @@ public class User implements java.io.Serializable {
 	private String userPoliticsStatus;
 	private String userMaritalStatus;
 	private String userRemark;
-	private Set<Login> logins = new HashSet<Login>(0);
 	private Set<Department> departments = new HashSet<Department>(0);
 	private Set<Document> documents = new HashSet<Document>(0);
 	private Set<Log> logs = new HashSet<Log>(0);
@@ -87,7 +86,7 @@ public class User implements java.io.Serializable {
 			Date userHiredate, String userOfficeAddress,
 			String userOfficePhone, String userNation, String userNativePlace,
 			Date userBirthday, String userPoliticsStatus,
-			String userMaritalStatus, String userRemark, Set<Login> logins,
+			String userMaritalStatus, String userRemark,
 			Set<Department> departments, Set<Document> documents,
 			Set<Log> logs, Set<Accessory> accessories) {
 		this.userNo = userNo;
@@ -108,7 +107,6 @@ public class User implements java.io.Serializable {
 		this.userPoliticsStatus = userPoliticsStatus;
 		this.userMaritalStatus = userMaritalStatus;
 		this.userRemark = userRemark;
-		this.logins = logins;
 		this.departments = departments;
 		this.documents = documents;
 		this.logs = logs;
@@ -290,15 +288,6 @@ public class User implements java.io.Serializable {
 
 	public void setUserRemark(String userRemark) {
 		this.userRemark = userRemark;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Login> getLogins() {
-		return this.logins;
-	}
-
-	public void setLogins(Set<Login> logins) {
-		this.logins = logins;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")

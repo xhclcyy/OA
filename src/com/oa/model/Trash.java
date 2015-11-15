@@ -23,6 +23,7 @@ public class Trash implements java.io.Serializable {
 	private String trashDocOrAccName;
 	private Timestamp trashTime;
 	private String trashDepartmentNo;
+	private String trashUserNo;
 
 	// Constructors
 
@@ -33,12 +34,13 @@ public class Trash implements java.io.Serializable {
 	/** full constructor */
 	public Trash(Integer trashDocOrAccId, Boolean trashDocOrAcc,
 			String trashDocOrAccName, Timestamp trashTime,
-			String trashDepartmentNo) {
+			String trashDepartmentNo, String trashUserNo) {
 		this.trashDocOrAccId = trashDocOrAccId;
 		this.trashDocOrAcc = trashDocOrAcc;
 		this.trashDocOrAccName = trashDocOrAccName;
 		this.trashTime = trashTime;
 		this.trashDepartmentNo = trashDepartmentNo;
+		this.trashUserNo = trashUserNo;
 	}
 
 	// Property accessors
@@ -97,6 +99,15 @@ public class Trash implements java.io.Serializable {
 
 	public void setTrashDepartmentNo(String trashDepartmentNo) {
 		this.trashDepartmentNo = trashDepartmentNo;
+	}
+
+	@Column(name = "trash_user_no", nullable = false, length = 15)
+	public String getTrashUserNo() {
+		return this.trashUserNo;
+	}
+
+	public void setTrashUserNo(String trashUserNo) {
+		this.trashUserNo = trashUserNo;
 	}
 
 }

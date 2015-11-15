@@ -25,8 +25,8 @@ public class Document implements java.io.Serializable {
 	// Fields
 
 	private Integer documentId;
-	private Document document;
 	private User user;
+	private Document document;
 	private Department department;
 	private String documentProperty;
 	private String documentName;
@@ -55,13 +55,13 @@ public class Document implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Document(Document document, User user, Department department,
+	public Document(User user, Document document, Department department,
 			String documentProperty, String documentName,
 			Timestamp documentCreateTime, String documentPath,
 			Boolean documentStatus, String documentRemark,
 			Set<Document> documents, Set<Accessory> accessories) {
-		this.document = document;
 		this.user = user;
+		this.document = document;
 		this.department = department;
 		this.documentProperty = documentProperty;
 		this.documentName = documentName;
@@ -87,16 +87,6 @@ public class Document implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "document_parent")
-	public Document getDocument() {
-		return this.document;
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "document_creater")
 	public User getUser() {
 		return this.user;
@@ -104,6 +94,16 @@ public class Document implements java.io.Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "document_parent")
+	public Document getDocument() {
+		return this.document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -20,9 +20,9 @@ public class Login implements java.io.Serializable {
 	// Fields
 
 	private Integer loginId;
-	private User user;
 	private Role role;
 	private Department department;
+	private String loginUserNo;
 	private String loginPassword;
 	private String loginRecentlyIp;
 	private Boolean loginStatus;
@@ -35,21 +35,21 @@ public class Login implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Login(User user, String loginPassword, String loginRecentlyIp,
-			Boolean loginStatus) {
-		this.user = user;
+	public Login(String loginUserNo, String loginPassword,
+			String loginRecentlyIp, Boolean loginStatus) {
+		this.loginUserNo = loginUserNo;
 		this.loginPassword = loginPassword;
 		this.loginRecentlyIp = loginRecentlyIp;
 		this.loginStatus = loginStatus;
 	}
 
 	/** full constructor */
-	public Login(User user, Role role, Department department,
+	public Login(Role role, Department department, String loginUserNo,
 			String loginPassword, String loginRecentlyIp, Boolean loginStatus,
 			String loginRemark) {
-		this.user = user;
 		this.role = role;
 		this.department = department;
+		this.loginUserNo = loginUserNo;
 		this.loginPassword = loginPassword;
 		this.loginRecentlyIp = loginRecentlyIp;
 		this.loginStatus = loginStatus;
@@ -70,17 +70,7 @@ public class Login implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "login_user_no", nullable = false)
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "login_role_no")
+	@JoinColumn(name = "login_role_id")
 	public Role getRole() {
 		return this.role;
 	}
@@ -90,13 +80,22 @@ public class Login implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "login_department_no")
+	@JoinColumn(name = "login_department_id")
 	public Department getDepartment() {
 		return this.department;
 	}
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+
+	@Column(name = "login_user_no", nullable = false, length = 15)
+	public String getLoginUserNo() {
+		return this.loginUserNo;
+	}
+
+	public void setLoginUserNo(String loginUserNo) {
+		this.loginUserNo = loginUserNo;
 	}
 
 	@Column(name = "login_password", nullable = false, length = 20)

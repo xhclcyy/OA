@@ -65,7 +65,7 @@ public class Log implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "log_user_no", nullable = false)
+	@JoinColumn(name = "log_user_id", nullable = false)
 	public User getUser() {
 		return this.user;
 	}
