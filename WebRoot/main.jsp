@@ -26,9 +26,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div align="center">
   	<div>---------------------主页------------------</div>
-  	用户账号：<s:property value="userAccount"/></br>
-     部门编号：<s:property value="departmentNo"/></br>
-      权限值：<s:property value="roleAuthorityValue"/></br>
+  	用户账号：<%=session.getAttribute("account")%></br>
+     部门编号：<%=session.getAttribute("departmentNo")%></br>
+      权限值：<%=session.getAttribute("roleAuthorityValue") %></br>
       </div>
   </body>
 </html>
