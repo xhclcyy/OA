@@ -31,7 +31,7 @@
 				name="password" /></br> 验证码：<input type="text" name="checkCode"><img
 				src="Kaptcha.jpg" alt="验证码"></br> <input type="submit" name="确定" />
 			<s:set name="hint" value="hint" />
-			<s:if test='#hint=="2"'>
+			<s:if test='#hint=="1"'>
 				<script type="text/javascript">
 					var result = confirm("该账号已在其他地方登录，是否注销它");
 					if (result) {
@@ -47,6 +47,20 @@
 			<s:else>
 				<s:property value="hint" />
 			</s:else>
+		</form>
+		<div>---------------------登出------------------</div>
+		
+		<form method="post" action="login_logout.do">
+		<input type="hidden" name="userAccount" value="<%=session.getAttribute("userAccount") %>"/>
+		<input type="submit" name="确定" />
+		</form>
+		<div>---------------------修改密码------------------</div>
+		<form method="post" action="login_changePassword.do">
+		<input type="hidden" name="userAccount" value="<%=session.getAttribute("userAccount") %>"/>
+		 旧密码：<input type="password" name="password" /></br>
+		 新密码：<input type="password" name="newPassword" /></br>
+		 新密码：<input type="password" name="newPassword1" /></br>
+		 <input type="submit" name="确定" />
 		</form>
 	</div>
 </body>

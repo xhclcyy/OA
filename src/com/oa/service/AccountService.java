@@ -44,10 +44,13 @@ public interface AccountService {
 	 *            密码
 	 */
 	public void changePassword(String loginUserNo, String password);
+
 	/**
-	 * 更新Login对象
-	 * @param login 登录对象
+	 * 获取登录对象
+	 * 
+	 * @param userAccount
+	 *            用户账号
+	 * @return 登录对象
 	 */
-	@Transactional
-	public void update(Login login);
+	public Login getLogin(String userAccount);
 }

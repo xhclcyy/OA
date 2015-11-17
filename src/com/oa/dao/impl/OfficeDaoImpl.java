@@ -41,12 +41,18 @@ public class OfficeDaoImpl implements OfficeDao {
 	}
 
 	@Override
-	public void update(String hql, Map<String, Object> values) {
+	public void update(String hql, Map<String, Object> values,
+			Map<String, Object> conditions) {
 		Session session = getSession();
 		Query query = session.createQuery(hql);
 		if (values != null && !values.isEmpty()) {
 			for (String key : values.keySet()) {
 				query.setParameter(key, values.get(key));
+			}
+		}
+		if (conditions != null && !conditions.isEmpty()) {
+			for (String key : conditions.keySet()) {
+				query.setParameter(key, conditions.get(key));
 			}
 		}
 		query.executeUpdate();

@@ -14,7 +14,6 @@ public interface DocumentService {
 	 *            文档对象
 	 */
 	public void createDocument(Document document);
-
 	/**
 	 * 把编辑好的文档保存到数据库
 	 * 

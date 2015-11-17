@@ -20,13 +20,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
   </head>
-  
   <body>
   	<div align="center">
   	<div>---------------------主页------------------</div>
-  	用户账号：<%=session.getAttribute("account")%></br>
+  	用户账号：<%=session.getAttribute("userAccount")%></br>
      部门编号：<%=session.getAttribute("departmentNo")%></br>
       权限值：<%=session.getAttribute("roleAuthorityValue") %></br>
       </div>

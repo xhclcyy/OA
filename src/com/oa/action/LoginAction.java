@@ -1,5 +1,6 @@
 package com.oa.action;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import com.oa.model.Department;
 import com.oa.model.Login;
 import com.oa.service.AccountService;
+import com.oa.service.BaseService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,12 +21,15 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 	private Login login;
 	private String userAccount;
 	private String password;
+	private String newPassword;
 	private String checkCode;
 	private AccountService accountService;
+	private BaseService baseService;
 	private String departmentNo;
 	private int roleAuthorityValue;
 	private String hint;
-	private Map<String,Object> session;  
+	private Map<String, Object> session;
+
 	@Override
 	public Login getModel() {
 		if (login == null)
@@ -37,12 +42,18 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 		this.accountService = accountService;
 	}
 
+	@Autowired
+	public void setBaseService(BaseService baseService) {
+		this.baseService = baseService;
+	}
+
 	public String login() {
 		session = ActionContext.getContext().getSession();
-		String kaptchaExpected = (String)session.get(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);  
-		session.remove(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);  
-		if(!kaptchaExpected.equals(checkCode)){
-			hint="验证码输入错误";
+		String kaptchaExpected = (String) session
+				.get(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		session.remove(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		if (!kaptchaExpected.equals(checkCode)) {
+			hint = "验证码输入错误";
 			return INPUT;
 		}
 		login = accountService.login(userAccount, password);
@@ -52,15 +63,16 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 			if (department != null)
 				departmentNo = department.getDepartmentNo();
 			roleAuthorityValue = login.getRole().getRoleAuthorityValue();
-			session.put("account", login.getLoginUserNo());
+			session.put("userAccount", login.getLoginUserNo());
 			session.put("departmentNo", departmentNo);
 			session.put("roleAuthorityValue", roleAuthorityValue);
 			if (login.getLoginStatus() == false) {
 				updateLogin(login);
 				return SUCCESS;
-			} else if(login.getLoginRecentlyIp().equals( ServletActionContext.getRequest().getRemoteAddr())){
-				hint="2";
-			}else{
+			} else if (login.getLoginRecentlyIp().equals(
+					ServletActionContext.getRequest().getRemoteAddr())) {
+				hint = "2";
+			} else {
 				hint = "1";
 			}
 		} else {
@@ -68,11 +80,31 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 		}
 		return INPUT;
 	}
+
 	private void updateLogin(Login login) {
 		String ip = ServletActionContext.getRequest().getRemoteAddr();
 		login.setLoginRecentlyIp(ip);
 		login.setLoginStatus(true);
-		accountService.update(login);
+		baseService.update(login);
+	}
+
+	public String logout() {
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("loginStatus", false);
+		Map<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("loginUserNo", userAccount);
+		baseService.update(Login.class, values, conditions);
+		return INPUT;
+	}
+
+	public String changePassword() {
+		Login login = accountService.getLogin(userAccount);
+		if (login.getLoginPassword().equals(password)) {
+			accountService.changePassword(userAccount, newPassword);
+		} else {
+			System.out.println("原密码输入错误");
+		}
+		return SUCCESS;
 	}
 
 	public String getUserAccount() {
@@ -109,5 +141,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 
 	public void setCheckCode(String checkCode) {
 		this.checkCode = checkCode;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 }

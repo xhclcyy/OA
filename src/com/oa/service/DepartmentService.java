@@ -13,7 +13,6 @@ public interface DepartmentService {
 	 *            部门对象
 	 */
 	public void addDepartment(Department department);
-
 	/**
 	 * 删除部门
 	 * 

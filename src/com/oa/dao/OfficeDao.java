@@ -35,9 +35,12 @@ public interface OfficeDao {
 	 * @param hql
 	 *            hql语句
 	 * @param values
-	 *            更新的字段和条件键值对
+	 *            更新的字段键值对
+	 * @param condictions
+	 *            更新条件键值对
 	 */
-	void update(String hql, Map<String, Object> values);
+	void update(String hql, Map<String, Object> values,
+			Map<String, Object> condictions);
 
 	/**
 	 * 根据主键删除对象

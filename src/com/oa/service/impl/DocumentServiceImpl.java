@@ -18,8 +18,8 @@ public class DocumentServiceImpl implements DocumentService {
 	private OfficeDao officeDao;
 
 	@Autowired
-	public void setVolunteerDao(OfficeDao volunteerDao) {
-		this.officeDao = volunteerDao;
+	public void setVolunteerDao(OfficeDao officeDao) {
+		this.officeDao = officeDao;
 	}
 
 	@Override
@@ -37,10 +37,11 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public void deleteDocument(String documentId, Trash trash) {
 		String hql = "update Document set documentStatus=:flag where documentId=:id";
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", documentId);
-		map.put("flag", false);
-		this.officeDao.update(hql, map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("id", documentId);
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("flag", false);
+		this.officeDao.update(hql, map1, map2);
 		this.officeDao.save(trash);
 	}
 
