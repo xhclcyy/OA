@@ -22,7 +22,7 @@ public class Accessory implements java.io.Serializable {
 
 	private Integer accessoryId;
 	private Document document;
-	private User user;
+	private Login login;
 	private String accessoryName;
 	private String accessoryProperty;
 	private String accessoryPath;
@@ -49,12 +49,12 @@ public class Accessory implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Accessory(Document document, User user, String accessoryName,
+	public Accessory(Document document, Login login, String accessoryName,
 			String accessoryProperty, String accessoryPath,
 			Timestamp accessoryCreateTime, Boolean accessoryStatus,
 			String accessoryRemark) {
 		this.document = document;
-		this.user = user;
+		this.login = login;
 		this.accessoryName = accessoryName;
 		this.accessoryProperty = accessoryProperty;
 		this.accessoryPath = accessoryPath;
@@ -87,13 +87,13 @@ public class Accessory implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "accessory_creater")
-	public User getUser() {
-		return this.user;
+	@JoinColumn(name = "accessory_creater_id")
+	public Login getLogin() {
+		return this.login;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	@Column(name = "accessory_name", nullable = false, length = 30)

@@ -1,5 +1,8 @@
 package com.oa.model;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,6 +31,8 @@ public class Login implements java.io.Serializable {
 	private String loginRecentlyIp;
 	private Boolean loginStatus;
 	private String loginRemark;
+	private Set<Document> documents = new HashSet<Document>(0);
+	private Set<Accessory> accessories = new HashSet<Accessory>(0);
 
 	// Constructors
 
@@ -46,7 +52,8 @@ public class Login implements java.io.Serializable {
 	/** full constructor */
 	public Login(Role role, Department department, String loginUserNo,
 			String loginPassword, String loginRecentlyIp, Boolean loginStatus,
-			String loginRemark) {
+			String loginRemark, Set<Document> documents,
+			Set<Accessory> accessories) {
 		this.role = role;
 		this.department = department;
 		this.loginUserNo = loginUserNo;
@@ -54,6 +61,8 @@ public class Login implements java.io.Serializable {
 		this.loginRecentlyIp = loginRecentlyIp;
 		this.loginStatus = loginStatus;
 		this.loginRemark = loginRemark;
+		this.documents = documents;
+		this.accessories = accessories;
 	}
 
 	// Property accessors
@@ -107,7 +116,7 @@ public class Login implements java.io.Serializable {
 		this.loginPassword = loginPassword;
 	}
 
-	@Column(name = "login_recently_ip", nullable = false, length = 15)
+	@Column(name = "login_recently_ip", nullable = false, length = 30)
 	public String getLoginRecentlyIp() {
 		return this.loginRecentlyIp;
 	}
@@ -132,6 +141,24 @@ public class Login implements java.io.Serializable {
 
 	public void setLoginRemark(String loginRemark) {
 		this.loginRemark = loginRemark;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "login")
+	public Set<Document> getDocuments() {
+		return this.documents;
+	}
+
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "login")
+	public Set<Accessory> getAccessories() {
+		return this.accessories;
+	}
+
+	public void setAccessories(Set<Accessory> accessories) {
+		this.accessories = accessories;
 	}
 
 }

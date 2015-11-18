@@ -63,6 +63,17 @@ public class OfficeDaoImpl implements OfficeDao {
 		getSession().delete(getSession().load(entity, id));
 	}
 
+	@Override
+	public void deleteByHQL(String hql, Map<String, Object> conditions) {
+		Query query = getSession().createQuery(hql);
+		if (conditions != null && !conditions.isEmpty()) {
+			for (String key : conditions.keySet()) {
+				query.setParameter(key, conditions.get(key));
+			}
+		}
+		query.executeUpdate();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> queryByCondition(Class<T> clazz, String hql,

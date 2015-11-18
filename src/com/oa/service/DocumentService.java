@@ -29,7 +29,7 @@ public interface DocumentService {
 	 * @param documentId
 	 *            文档Id
 	 */
-	public void deleteDocument(String documentId);
+	public void deleteDocument(int documentId);
 
 	/**
 	 * 真正删除文档
@@ -37,20 +37,17 @@ public interface DocumentService {
 	 * @param documentId
 	 *            文档Id
 	 */
-	public void realDeleteDocument(String documentId);
+	public void realDeleteDocument(int documentId);
 
 	/**
-	 * 获取文件夹及文档，如果departmentNo不为null表示第一次获取，这时根据登录者的部门
 	 * 获取根文件夹和根文档，如果departmentNO为null表示非第一次获取，这时根据parentId 获取下一层的文件夹和下一层的文档。
 	 * 
-	 * @param departmentNo
-	 *            部门编号
 	 * @param parentId
 	 *            父级文档Id
 	 * @return 文件夹及文档信息，map.get("folder")获取到List类型文件夹列表信息，
 	 *         map.get("document")获取到List类型文档列表信息。
 	 */
-	public Map<String, Object> getDocuments(String departmentNo, String parentId);
+	public Map<String, String> getDocuments(String parentId);
 
 	/**
 	 * 获取文档详细信息，文档可能有附件，map.get("document")得到的是Map类型的文本详细信息,
@@ -60,7 +57,7 @@ public interface DocumentService {
 	 *            文档Id
 	 * @return 文档详细信息
 	 */
-	public Map<String, Object> getDocument(String documentId);
+	public Map<String, String> getDocument(int documentId);
 
 	/**
 	 * 分页搜索文档
@@ -71,7 +68,7 @@ public interface DocumentService {
 	 *            查询条件（文档名称、附件名称、创建者、创建时间（传两个值，起始时间和结束时间））
 	 * @return 文档列表信息
 	 */
-	public List<Map<String, Object>> queryDocumentsByPage(String departmentNo,
+	public List<Map<String, String>> queryDocumentsByPage(String departmentNo,
 			Map<String, String> conditions);
 
 	/**
@@ -80,15 +77,6 @@ public interface DocumentService {
 	 * @param documentId
 	 *            文档Id
 	 */
-	public void restoreDocument(String documentId);
+	public void restoreDocument(int documentId);
 
-	/**
-	 * 分页获取回收站中的文档和附件，默认按时间排序
-	 * 
-	 * @param departmentNo
-	 *            部门编号
-	 * @param condition
-	 *            查询条件
-	 */
-	public void getTrashDocAndAccByPage(String departmentNo, String condition);
 }

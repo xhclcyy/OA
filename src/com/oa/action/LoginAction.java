@@ -40,6 +40,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
 	}
+
 	public String login() {
 		session = ActionContext.getContext().getSession();
 		String kaptchaExpected = (String) session

@@ -125,4 +125,14 @@ public interface OfficeDao {
 	 */
 	public int count(String hql, Map<String, Object> map);
 
+	/**
+	 * 根据hql语句执行删除操作
+	 * 
+	 * @param hql
+	 *            hql语句
+	 * @param conditions
+	 *            条件键值对
+	 */
+	public void deleteByHQL(String hql, Map<String, Object> conditions);
+
 }

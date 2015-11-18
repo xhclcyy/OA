@@ -14,25 +14,24 @@ import com.oa.model.User;
 import com.oa.service.AccountService;
 
 @Service
-public class AccountServiceImpl extends BaseServiceImpl implements AccountService {
+public class AccountServiceImpl extends BaseServiceImpl implements
+		AccountService {
 
 	@Override
 	public Login login(String account, String password) {
-		String hql = "from Login lg where lg.loginUserNo=:account and lg.loginPassword=:password";
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("account", account);
-		map.put("password", password);
-		List<Login> logins = (List<Login>) officeDao.queryByCondition(
-				Login.class, hql, map);
+		map.put("loginUserNo", account);
+		map.put("loginPassword", password);
+		List<Login> logins = super.query(Login.class, map, null, false);
 		if (logins != null && logins.size() > 0) {
 			return logins.get(0);
 		} else {
 			return null;
 		}
-
 	}
 
 	@Override
+	@Transactional
 	public void logout(String userAccount) {
 		Map<String, Object> values = new HashMap<String, Object>();
 		values.put("loginStatus", false);
@@ -44,32 +43,29 @@ public class AccountServiceImpl extends BaseServiceImpl implements AccountServic
 	@Override
 	@Transactional
 	public void register(User user, Login login) {
-		super.add(user);
-		super.add(login);
+		add(user);
+		add(login);
 	}
 
 	@Override
 	public void changePassword(String loginUserNo, String password) {
-		String hql = "update Login lg set lg.loginPassword=:password where lg.loginUserNo=:loginUserNo";
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("password", password);
-		map.put("loginUserNo", loginUserNo);
-		officeDao.update(hql, map, null);
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("loginPassword", password);
+		Map<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("loginUserNo", loginUserNo);
+		super.update(Login.class, values, conditions);
 	}
 
 	@Override
 	public Login getLogin(String userAccount) {
-		String hql = "from Login lg where lg.loginUserNo=:userAccount";
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userAccount", userAccount);
-		List<Login> logins = (List<Login>) officeDao.queryByCondition(
-				Login.class, hql, map);
+		map.put("loginUserNo", userAccount);
+		List<Login> logins = super.query(Login.class, map, null, false);
 		if (logins != null && logins.size() > 0) {
 			return logins.get(0);
 		} else {
 			return null;
 		}
-
 	}
 
 	@Override

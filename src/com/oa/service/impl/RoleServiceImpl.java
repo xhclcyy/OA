@@ -3,11 +3,13 @@ package com.oa.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oa.model.Role;
 import com.oa.service.RoleService;
 
+@Service
 public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 
 	@Override
@@ -30,9 +32,7 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> getRoles() {
-		String hql = "FROM Role";
-		List<Role> roles = officeDao.queryByCondition(Role.class, hql, null);
-		return roles;
+		return query(Role.class, null, "roleName", true);
 	}
 
 }

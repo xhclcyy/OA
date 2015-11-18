@@ -44,9 +44,7 @@ public class User implements java.io.Serializable {
 	private String userMaritalStatus;
 	private String userRemark;
 	private Set<Department> departments = new HashSet<Department>(0);
-	private Set<Document> documents = new HashSet<Document>(0);
 	private Set<Log> logs = new HashSet<Log>(0);
-	private Set<Accessory> accessories = new HashSet<Accessory>(0);
 
 	// Constructors
 
@@ -87,8 +85,7 @@ public class User implements java.io.Serializable {
 			String userOfficePhone, String userNation, String userNativePlace,
 			Date userBirthday, String userPoliticsStatus,
 			String userMaritalStatus, String userRemark,
-			Set<Department> departments, Set<Document> documents,
-			Set<Log> logs, Set<Accessory> accessories) {
+			Set<Department> departments, Set<Log> logs) {
 		this.userNo = userNo;
 		this.userName = userName;
 		this.userPicture = userPicture;
@@ -108,9 +105,7 @@ public class User implements java.io.Serializable {
 		this.userMaritalStatus = userMaritalStatus;
 		this.userRemark = userRemark;
 		this.departments = departments;
-		this.documents = documents;
 		this.logs = logs;
-		this.accessories = accessories;
 	}
 
 	// Property accessors
@@ -300,30 +295,12 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Document> getDocuments() {
-		return this.documents;
-	}
-
-	public void setDocuments(Set<Document> documents) {
-		this.documents = documents;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<Log> getLogs() {
 		return this.logs;
 	}
 
 	public void setLogs(Set<Log> logs) {
 		this.logs = logs;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Accessory> getAccessories() {
-		return this.accessories;
-	}
-
-	public void setAccessories(Set<Accessory> accessories) {
-		this.accessories = accessories;
 	}
 
 }

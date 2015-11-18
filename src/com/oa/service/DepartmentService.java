@@ -13,6 +13,7 @@ public interface DepartmentService {
 	 *            部门对象
 	 */
 	public void addDepartment(Department department);
+
 	/**
 	 * 删除部门
 	 * 
@@ -35,9 +36,12 @@ public interface DepartmentService {
 	 * @return 部门信息列表
 	 */
 	public List<Map<String, Object>> getDeprtments();
+
 	/**
-	 * 更新部门人口数				
-	 * @param departmentId 部门Id
+	 * 更新部门人口数
+	 * 
+	 * @param departmentId
+	 *            部门Id
 	 */
 	void updateDepartmentPopulation(String departmentId);
 }

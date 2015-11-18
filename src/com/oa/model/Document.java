@@ -25,9 +25,9 @@ public class Document implements java.io.Serializable {
 	// Fields
 
 	private Integer documentId;
-	private User user;
 	private Document document;
 	private Department department;
+	private Login login;
 	private String documentProperty;
 	private String documentName;
 	private Timestamp documentCreateTime;
@@ -55,14 +55,14 @@ public class Document implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Document(User user, Document document, Department department,
+	public Document(Document document, Department department, Login login,
 			String documentProperty, String documentName,
 			Timestamp documentCreateTime, String documentPath,
 			Boolean documentStatus, String documentRemark,
 			Set<Document> documents, Set<Accessory> accessories) {
-		this.user = user;
 		this.document = document;
 		this.department = department;
+		this.login = login;
 		this.documentProperty = documentProperty;
 		this.documentName = documentName;
 		this.documentCreateTime = documentCreateTime;
@@ -87,16 +87,6 @@ public class Document implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "document_creater")
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "document_parent")
 	public Document getDocument() {
 		return this.document;
@@ -114,6 +104,16 @@ public class Document implements java.io.Serializable {
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "document_creater_id")
+	public Login getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	@Column(name = "document_property", nullable = false, length = 20)
