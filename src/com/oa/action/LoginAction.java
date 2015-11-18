@@ -24,7 +24,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 	private String newPassword;
 	private String checkCode;
 	private AccountService accountService;
-	private BaseService baseService;
 	private String departmentNo;
 	private int roleAuthorityValue;
 	private String hint;
@@ -41,12 +40,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
 	}
-
-	@Autowired
-	public void setBaseService(BaseService baseService) {
-		this.baseService = baseService;
-	}
-
 	public String login() {
 		session = ActionContext.getContext().getSession();
 		String kaptchaExpected = (String) session
@@ -85,15 +78,11 @@ public class LoginAction extends ActionSupport implements ModelDriven<Login> {
 		String ip = ServletActionContext.getRequest().getRemoteAddr();
 		login.setLoginRecentlyIp(ip);
 		login.setLoginStatus(true);
-		baseService.update(login);
+		accountService.update(login);
 	}
 
 	public String logout() {
-		Map<String, Object> values = new HashMap<String, Object>();
-		values.put("loginStatus", false);
-		Map<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("loginUserNo", userAccount);
-		baseService.update(Login.class, values, conditions);
+		accountService.logout(userAccount);
 		return INPUT;
 	}
 

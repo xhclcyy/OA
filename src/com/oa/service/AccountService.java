@@ -1,7 +1,5 @@
 package com.oa.service;
 
-import javax.transaction.Transactional;
-
 import com.oa.model.Login;
 import com.oa.model.User;
 
@@ -53,4 +51,12 @@ public interface AccountService {
 	 * @return 登录对象
 	 */
 	public Login getLogin(String userAccount);
+
+	/**
+	 * 更新登录对象
+	 * 
+	 * @param login
+	 *            登录对象
+	 */
+	public void update(Login login);
 }

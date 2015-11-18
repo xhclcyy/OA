@@ -20,19 +20,16 @@ public class BaseServiceImpl implements BaseService {
 	}
 
 	@Override
-	@Transactional
 	public void add(Object entity) {
 		this.officeDao.save(entity);
 	}
 
 	@Override
-	@Transactional
 	public void update(Object entity) {
 		this.officeDao.update(entity);
 	}
 
 	@Override
-	@Transactional
 	public void update(Class<?> clazz, Map<String, Object> values,
 			Map<String, Object> conditions) {
 		String className = clazz.getName();
@@ -54,7 +51,6 @@ public class BaseServiceImpl implements BaseService {
 	}
 
 	@Override
-	@Transactional
 	public void delete(Class<?> clazz, Serializable id) {
 		officeDao.deleteByPriKey(clazz, id);
 	}

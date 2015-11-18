@@ -14,40 +14,35 @@ import com.oa.model.Trash;
 import com.oa.service.DocumentService;
 
 @Service
-public class DocumentServiceImpl implements DocumentService {
-	private OfficeDao officeDao;
-
-	@Autowired
-	public void setVolunteerDao(OfficeDao officeDao) {
-		this.officeDao = officeDao;
+public class DocumentServiceImpl extends BaseServiceImpl implements
+		DocumentService {
+	@Override
+	@Transactional
+	public void createDocument(Document document) {
+		add(document);
 	}
 
 	@Override
 	@Transactional
-	public void createDocument(Document document) {
-		this.officeDao.save(document);
-	}
-
-	@Override
 	public void editDocument(Document document) {
-		this.officeDao.update(document);
+		update(document);
 
 	}
 
 	@Override
 	public void deleteDocument(String documentId, Trash trash) {
-		String hql = "update Document set documentStatus=:flag where documentId=:id";
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("id", documentId);
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("flag", false);
-		this.officeDao.update(hql, map1, map2);
-		this.officeDao.save(trash);
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("flag", false);
+		Map<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("id", documentId);
+		super.update(Document.class, values, conditions);
+		add(trash);
 	}
 
 	@Override
+	@Transactional
 	public void realDeleteDocument(String documentId) {
-		this.officeDao.deleteByPriKey(Document.class, documentId);
+		delete(Document.class, documentId);
 
 	}
 

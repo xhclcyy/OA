@@ -14,13 +14,7 @@ import com.oa.model.User;
 import com.oa.service.AccountService;
 
 @Service
-public class AccountServiceImpl implements AccountService {
-	private OfficeDao officeDao;
-
-	@Autowired
-	public void setVolunteerDao(OfficeDao officeDao) {
-		this.officeDao = officeDao;
-	}
+public class AccountServiceImpl extends BaseServiceImpl implements AccountService {
 
 	@Override
 	public Login login(String account, String password) {
@@ -39,15 +33,19 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void logout(String account) {
-		// TODO Auto-generated method stub
-
+	public void logout(String userAccount) {
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("loginStatus", false);
+		Map<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("loginUserNo", userAccount);
+		update(Login.class, values, conditions);
 	}
 
 	@Override
+	@Transactional
 	public void register(User user, Login login) {
-		// TODO Auto-generated method stub
-
+		super.add(user);
+		super.add(login);
 	}
 
 	@Override
@@ -72,5 +70,11 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 		}
 
+	}
+
+	@Override
+	@Transactional
+	public void update(Login login) {
+		super.update(login);
 	}
 }
