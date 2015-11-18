@@ -26,6 +26,7 @@ public class AccessoryServiceImpl extends BaseServiceImpl implements
 		Map<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("accessoryId", accessoryId);
 		update(Accessory.class, values, conditions);
+		//待完成，从Trash表中移除附件
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class AccessoryServiceImpl extends BaseServiceImpl implements
 		Map<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("accessoryId", accessoryId);
 		update(Accessory.class, values, conditions);
+		//待完成，添加附件到Trash表中
 	}
 
 	@Override

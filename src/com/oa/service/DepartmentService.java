@@ -35,4 +35,9 @@ public interface DepartmentService {
 	 * @return 部门信息列表
 	 */
 	public List<Map<String, Object>> getDeprtments();
+	/**
+	 * 更新部门人口数				
+	 * @param departmentId 部门Id
+	 */
+	void updateDepartmentPopulation(String departmentId);
 }

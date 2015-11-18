@@ -14,6 +14,7 @@ public interface DocumentService {
 	 *            文档对象
 	 */
 	public void createDocument(Document document);
+
 	/**
 	 * 把编辑好的文档保存到数据库
 	 * 
@@ -27,10 +28,8 @@ public interface DocumentService {
 	 * 
 	 * @param documentId
 	 *            文档Id
-	 * @param trash
-	 *            垃圾回收对象trash
 	 */
-	public void deleteDocument(String documentId, Trash trash);
+	public void deleteDocument(String documentId);
 
 	/**
 	 * 真正删除文档
@@ -39,14 +38,6 @@ public interface DocumentService {
 	 *            文档Id
 	 */
 	public void realDeleteDocument(String documentId);
-
-	/**
-	 * 清空回收站（批量删除文档和附件），如果departmentNo为null表示管理员操作，会清空 所有部门的回收站
-	 * 
-	 * @param departmentNo
-	 *            部门编号
-	 */
-	public void emptyTrash(String departmentNo);
 
 	/**
 	 * 获取文件夹及文档，如果departmentNo不为null表示第一次获取，这时根据登录者的部门

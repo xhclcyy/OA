@@ -35,5 +35,5 @@ public interface RoleService {
 	 * 
 	 * @return 角色信息列表
 	 */
-	public List<Map<String, Object>> getRoles();
+	public List<Role> getRoles();
 }

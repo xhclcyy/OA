@@ -30,24 +30,19 @@ public class DocumentServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public void deleteDocument(String documentId, Trash trash) {
+	public void deleteDocument(String documentId) {
 		Map<String, Object> values = new HashMap<String, Object>();
 		values.put("flag", false);
 		Map<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("id", documentId);
-		super.update(Document.class, values, conditions);
-		add(trash);
+		update(Document.class, values, conditions);
+		//待完成，添加文档到Trash表
 	}
 
 	@Override
 	@Transactional
 	public void realDeleteDocument(String documentId) {
 		delete(Document.class, documentId);
-
-	}
-
-	@Override
-	public void emptyTrash(String departmentNo) {
 
 	}
 
@@ -69,7 +64,12 @@ public class DocumentServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public void restoreDocument(String documentId) {
-
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("flag", true);
+		Map<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("id", documentId);
+		update(Document.class, values, conditions);
+		//待完成，从Trash表中删除文档
 	}
 
 	@Override
