@@ -47,7 +47,7 @@ public interface DocumentService {
 	 * @return 文件夹及文档信息，map.get("folder")获取到List类型文件夹列表信息，
 	 *         map.get("document")获取到List类型文档列表信息。
 	 */
-	public Map<String, String> getDocuments(String parentId);
+	public Map<String, Object> getDocuments(String parentId);
 
 	/**
 	 * 获取文档详细信息，文档可能有附件，map.get("document")得到的是Map类型的文本详细信息,
@@ -57,19 +57,26 @@ public interface DocumentService {
 	 *            文档Id
 	 * @return 文档详细信息
 	 */
-	public Map<String, String> getDocument(int documentId);
+	public Map<String, Object> getDocument(int documentId);
 
 	/**
 	 * 分页搜索文档
 	 * 
-	 * @param departmentNo
-	 *            部门编号（如果为null表示管理员进行查询，如果不为null表示部门人员进行查询）
 	 * @param conditions
-	 *            查询条件（文档名称、附件名称、创建者、创建时间（传两个值，起始时间和结束时间））
+	 *            查询条件（部门编号、文档名称、附件名称、创建者）
+	 * @param start
+	 *            页码
+	 * @param size
+	 *            分页大小
+	 * @param filedName
+	 *            排序字段
+	 * @param up
+	 *            true表示升序，false表示降序
 	 * @return 文档列表信息
 	 */
-	public List<Map<String, String>> queryDocumentsByPage(String departmentNo,
-			Map<String, String> conditions);
+	public List<Map<String, Object>> queryDocumentsByPage(
+			Map<String, Object> conditions, int start, int size,
+			String filedName, boolean up);
 
 	/**
 	 * 从回收站还原文档

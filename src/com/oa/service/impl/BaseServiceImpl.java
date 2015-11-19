@@ -95,4 +95,33 @@ public class BaseServiceImpl implements BaseService {
 		list = officeDao.queryByCondition(clazz, hql.toString(), map);
 		return list;
 	}
+
+	@Override
+	public <T> List<T> queryByPage(Class<T> clazz, Map<String, Object> map,
+			int start, int size, String filedName, boolean up) {
+		List<T> list = null;
+		String className = clazz.getSimpleName();
+		StringBuffer hql = new StringBuffer("FROM " + className + " cn");
+		if (map != null && !map.isEmpty()) {
+			hql.append(" WHERE");
+			for (String key : map.keySet()) {
+				hql.append(" cn." + key + "=:" + key + " AND");
+			}
+			hql.delete(hql.length() - 4, hql.length());
+		}
+		if (filedName != null) {
+			hql.append(" ORDER BY cn." + filedName);
+			if (up)
+				hql.append(" ASC");
+			else
+				hql.append(" DESC");
+		}
+		try {
+			list = officeDao.queryByConditionWithPaging(clazz, hql.toString(),
+					map, start, size);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

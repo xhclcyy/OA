@@ -31,6 +31,7 @@ public class Login implements java.io.Serializable {
 	private String loginRecentlyIp;
 	private Boolean loginStatus;
 	private String loginRemark;
+	private String loginUserName;
 	private Set<Document> documents = new HashSet<Document>(0);
 	private Set<Accessory> accessories = new HashSet<Accessory>(0);
 
@@ -42,17 +43,18 @@ public class Login implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Login(String loginUserNo, String loginPassword,
-			String loginRecentlyIp, Boolean loginStatus) {
+			String loginRecentlyIp, Boolean loginStatus, String loginUserName) {
 		this.loginUserNo = loginUserNo;
 		this.loginPassword = loginPassword;
 		this.loginRecentlyIp = loginRecentlyIp;
 		this.loginStatus = loginStatus;
+		this.loginUserName = loginUserName;
 	}
 
 	/** full constructor */
 	public Login(Role role, Department department, String loginUserNo,
 			String loginPassword, String loginRecentlyIp, Boolean loginStatus,
-			String loginRemark, Set<Document> documents,
+			String loginRemark, String loginUserName, Set<Document> documents,
 			Set<Accessory> accessories) {
 		this.role = role;
 		this.department = department;
@@ -61,6 +63,7 @@ public class Login implements java.io.Serializable {
 		this.loginRecentlyIp = loginRecentlyIp;
 		this.loginStatus = loginStatus;
 		this.loginRemark = loginRemark;
+		this.loginUserName = loginUserName;
 		this.documents = documents;
 		this.accessories = accessories;
 	}
@@ -141,6 +144,15 @@ public class Login implements java.io.Serializable {
 
 	public void setLoginRemark(String loginRemark) {
 		this.loginRemark = loginRemark;
+	}
+
+	@Column(name = "login_user_name", nullable = false, length = 30)
+	public String getLoginUserName() {
+		return this.loginUserName;
+	}
+
+	public void setLoginUserName(String loginUserName) {
+		this.loginUserName = loginUserName;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "login")

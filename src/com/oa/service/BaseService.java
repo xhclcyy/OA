@@ -18,4 +18,7 @@ public interface BaseService {
 
 	public <T> List<T> query(Class<T> clazz, Map<String, Object> map,
 			String filedName, boolean up);
+
+	public <T> List<T> queryByPage(Class<T> clazz, Map<String, Object> map,
+			int start, int size, String filedName, boolean up);
 }
