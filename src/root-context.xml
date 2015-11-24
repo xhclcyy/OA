@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd"
+    xmlns:tx="http://www.springframework.org/schema/tx">
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://202.116.161.92:3306/office_automation?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="developer" />
+		<property name="password" value="developer" />
+	</bean>
+	<!--定义Hibernate的SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!--配置SessionFactory所需的数据源，注入上文定义的dataSource -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!--定义Hibernate的SessionFactory的属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+		<!-- 指定需要扫描的包，只有在指定包下的类使用的注解才有效 -->
+		<property name="packagesToScan" value="com.oa.model" />
+	</bean>
+	<!--配置Hibernate的局部事务管理器，使用HibernateTransactionManager类，配置该类需依赖注入SessionFactory -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 根据Annotation来生成事务代理 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>
