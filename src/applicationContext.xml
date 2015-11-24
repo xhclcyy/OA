@@ -1,58 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 	http://www.springframework.org/schema/tx 
-	http://www.springframework.org/schema/tx/spring-tx.xsd
-	 http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd
-           http://www.springframework.org/schema/aop 
-    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	http://www.springframework.org/schema/tx/spring-tx.xsd 
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop">
-	<!-- 配置数据源 -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://202.116.161.92:3306/office_automation?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
-		<property name="username" value="developer" />
-		<property name="password" value="developer" />
-	</bean>
-	<!--定义Hibernate的SessionFactory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<!--配置SessionFactory所需的数据源，注入上文定义的dataSource -->
-		<property name="dataSource" ref="dataSource"></property>
-		<!--定义Hibernate的SessionFactory的属性 -->
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLDialect
-				</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="current_session_context_class">thread</prop>
-				<prop key="javax.persistence.validation.mode">none</prop>
-			</props>
-		</property>
-		<!-- 指定需要扫描的包，只有在指定包下的类使用的注解才有效 -->
-		<property name="packagesToScan" value="com.oa.model" />
-	</bean>
-	<!--配置Hibernate的局部事务管理器，使用HibernateTransactionManager类，配置该类需依赖注入SessionFactory -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<!-- 根据Annotation来生成事务代理 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
 	<!--使用注解进行bean的注入，spring会去扫描base-package下的包，发现有@Component@Controller等这些注解，则把这些类注册为bean -->
 	<context:component-scan
-		base-package="com.oa.action.impl,com.oa.service.impl,com.oa.dao.impl">
+		base-package="com.oa.controller,com.oa.service.impl,com.oa.dao.impl,com.oa.interceptor">
 		<context:include-filter type="annotation"
 			expression="org.aspectj.lang.annotation.Aspect" />
 	</context:component-scan>
+
 	<!-- 默认为false，表示使用jdk动态代理织入增强，当配为true时，表示使用CGLib动态代理技术织入增强。 不过即使proxy-target-class设置为false，如果目标类没有声明接口，则spring将自动使用CGLib动态代理。 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 声明DispatcherServlet不要拦截下面声明的目录 刘杜康 2015年11月22日21:59:04 -->
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/image/" mapping="/image/**" />
+	<!-- <mvc:resources location="/" mapping="*.jsp" /> -->
+	<!-- <mvc:resources location="/WEB-INF/jsp/" mapping="/WEB-INF/jsp/**" /> -->
+
+	<mvc:annotation-driven />
+	<mvc:view-controller path="/" view-name="index" />
+	<!-- 禁用权限拦截器 http://blog.csdn.net/jrn1012/article/details/25781319 -->
+	<!-- <mvc:interceptors> <bean class="com.oa.interceptor.AuthInterceptor" 
+		/> </mvc:interceptors> -->
+
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Configure to plugin JSON as request and response in method handler -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Configure bean to convert JSON to POJO and vice versa -->
+	<bean id="jsonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<!-- <property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> 
+			</list> </property> -->
+
+	</bean>
+
+	<!-- error.jsp 未写 -->
+	<!--配置异常映射路径,ajax提示 -->
+	<bean id="exceptionResolver" class="com.oa.tool.PlatformMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.oa.tool.UploadException">error</prop>
+				<prop key="java.lang.Exception">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+
 </beans>
