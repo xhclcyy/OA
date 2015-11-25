@@ -1,5 +1,8 @@
 package com.oa.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.oa.model.Accessory;
 
 public interface AccessoryService {
@@ -45,4 +48,13 @@ public interface AccessoryService {
 	 * @return 附件对象
 	 */
 	public Accessory getAccessory(int accessoryId);
+	/**
+	 * 按条件查找附件
+	 * @param userName 用户名
+	 * @param accessoryName 附件名
+	 * @param start 页码
+	 * @param size 分页大小
+	 * @return 附件列表信息
+	 */
+	public List<Map<String,Object>> queryAccessorys(String userName,String accessoryName,int start,int size);
 }

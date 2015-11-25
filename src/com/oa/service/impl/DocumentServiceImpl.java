@@ -74,23 +74,38 @@ public class DocumentServiceImpl extends BaseServiceImpl implements
 		} else {
 			conditions.put("document.documentId", parentId);
 		}
-		conditions.put("documentProperty", "文件夹");
 		List<Document> documents = query(Document.class, conditions,
 				"documentName", true);
 		List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
 		for (Document document : documents) {
 			list1.add(getDocumentMap(document, true));
 		}
-		conditions.put("documentProperty", "文档");
-		documents = query(Document.class, conditions, "documentName", true);
 		List<Map<String, Object>> list2 = new ArrayList<Map<String, Object>>();
-		for (Document document : documents) {
-			list2.add(getDocumentMap(document, true));
+		if (parentId != null) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("document.documentId", parentId);
+			map.put("document.documentStatus", true);
+			List<Accessory> accessorys = super.query(Accessory.class, map,
+					"accessoryName", true);
+			for (Accessory accessory : accessorys) {
+				list2.add(getAccessoryMap(accessory));
+			}
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("folders", list1);
 		result.put("files", list2);
 		return result;
+	}
+
+	private Map<String, Object> getAccessoryMap(Accessory accessory) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accessoryId", accessory.getAccessoryId());
+		map.put("accessoryName", accessory.getAccessoryName());
+		map.put("accessoryPath", accessory.getAccessoryPath());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+		map.put("accessoryCreateTime",
+				format.format(accessory.getAccessoryCreateTime()));
+		return map;
 	}
 
 	@Override
@@ -109,7 +124,7 @@ public class DocumentServiceImpl extends BaseServiceImpl implements
 			Map<String, Object> conditions, int start, int size,
 			String filedName, boolean up) {
 		conditions.put("documentStatus", true);
-		conditions.put("documentProperty", "文本文档");
+		// conditions.put("documentProperty", "文本文档");
 		List<Document> documents = queryByPage(Document.class, conditions,
 				start, size, filedName, up);
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -132,7 +147,7 @@ public class DocumentServiceImpl extends BaseServiceImpl implements
 		if (!isSimple) {
 			map.put("documentRemark", document.getDocumentRemark());
 			map.put("documentProperty", document.getDocumentProperty());
-			map.put("documentPath", document.getDocumentPath());
+			// map.put("documentPath", document.getDocumentPath());
 			map.put("documentDepartmentName", document.getDepartment()
 					.getDepartmentName());
 		}

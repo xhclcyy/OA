@@ -2,6 +2,7 @@ package com.oa.service.impl;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,12 @@ public class AccessoryServiceImpl extends BaseServiceImpl implements
 		map.put("accessoryId", accessoryId);
 		return officeDao.queryByCondition(Accessory.class, hql, null).get(0);
 	}
+
+	@Override
+	public List<Map<String, Object>> queryAccessorys(String userName,
+			String accessoryName,int start,int size) {
+		return null;
+	}
+	
 
 }

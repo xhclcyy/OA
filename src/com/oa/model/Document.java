@@ -31,7 +31,6 @@ public class Document implements java.io.Serializable {
 	private String documentProperty;
 	private String documentName;
 	private Timestamp documentCreateTime;
-	private String documentPath;
 	private Boolean documentStatus;
 	private String documentRemark;
 	private Set<Document> documents = new HashSet<Document>(0);
@@ -45,28 +44,25 @@ public class Document implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Document(String documentProperty, String documentName,
-			Timestamp documentCreateTime, String documentPath,
-			Boolean documentStatus) {
+			Timestamp documentCreateTime, Boolean documentStatus) {
 		this.documentProperty = documentProperty;
 		this.documentName = documentName;
 		this.documentCreateTime = documentCreateTime;
-		this.documentPath = documentPath;
 		this.documentStatus = documentStatus;
 	}
 
 	/** full constructor */
 	public Document(Document document, Department department, Login login,
 			String documentProperty, String documentName,
-			Timestamp documentCreateTime, String documentPath,
-			Boolean documentStatus, String documentRemark,
-			Set<Document> documents, Set<Accessory> accessories) {
+			Timestamp documentCreateTime, Boolean documentStatus,
+			String documentRemark, Set<Document> documents,
+			Set<Accessory> accessories) {
 		this.document = document;
 		this.department = department;
 		this.login = login;
 		this.documentProperty = documentProperty;
 		this.documentName = documentName;
 		this.documentCreateTime = documentCreateTime;
-		this.documentPath = documentPath;
 		this.documentStatus = documentStatus;
 		this.documentRemark = documentRemark;
 		this.documents = documents;
@@ -141,15 +137,6 @@ public class Document implements java.io.Serializable {
 
 	public void setDocumentCreateTime(Timestamp documentCreateTime) {
 		this.documentCreateTime = documentCreateTime;
-	}
-
-	@Column(name = "document_path", nullable = false, length = 50)
-	public String getDocumentPath() {
-		return this.documentPath;
-	}
-
-	public void setDocumentPath(String documentPath) {
-		this.documentPath = documentPath;
 	}
 
 	@Column(name = "document_status", nullable = false)
